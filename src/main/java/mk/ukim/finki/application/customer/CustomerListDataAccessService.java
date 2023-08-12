@@ -2,7 +2,6 @@ package mk.ukim.finki.application.customer;
 
 import org.springframework.stereotype.Repository;
 
-import java.lang.module.ResolutionException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -54,6 +53,14 @@ public class CustomerListDataAccessService implements CustomerDao {
     public boolean existsCustomerWithId(Integer id) {
         return customerList.stream()
                 .anyMatch(customer -> customer.getId().equals(id));
+    }
+
+    @Override
+    public Customer updateCustomer(Customer customer) {
+        deleteCustomerById(customer.getId());
+        customerList.add(customer);
+
+        return customer;
     }
 
 }

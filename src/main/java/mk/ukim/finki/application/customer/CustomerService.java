@@ -1,11 +1,13 @@
 package mk.ukim.finki.application.customer;
 
 import mk.ukim.finki.application.exception.DuplicateResourceException;
+import mk.ukim.finki.application.exception.RequestValidationException;
 import mk.ukim.finki.application.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class CustomerService {
@@ -26,11 +28,14 @@ public class CustomerService {
                 .orElseThrow(() -> new ResourceNotFoundException("customer with id [%s] not found".formatted(id)));
     }
 
+    private void checkIfEmailExists(String request, String customer) {
+        if (this.customerDao.existsCustomerWithEmail(request))
+            throw new DuplicateResourceException("customer with email [%s] already exists".formatted(customer));
+    }
+
     public Customer saveCustomer(CustomerRegistrationRequest request) {
         String email = request.email();
-
-        if (this.customerDao.existsCustomerWithEmail(email))
-            throw new DuplicateResourceException("customer with email [%s] already exists".formatted(email));
+        checkIfEmailExists(email, email);
 
         Customer customer = new Customer(
                 request.name(),
@@ -43,8 +48,34 @@ public class CustomerService {
 
     public void deleteCustomerById(Integer id) {
         if (!this.customerDao.existsCustomerWithId(id))
-            throw new ResourceNotFoundException("customer with id [%s] not found".formatted(id));
+            throw new ResourceNotFoundException("customer with id [%d] not found".formatted(id));
 
         this.customerDao.deleteCustomerById(id);
     }
+
+    public Customer updateCustomer(Integer id, CustomerUpdateRequest request) {
+        Customer customer = getCustomerById(id);
+
+        boolean dataChanged = false;
+
+        if (request.name() != null && !Objects.equals(request.name(), customer.getName())) {
+            customer.setName(request.name());
+            dataChanged = true;
+        }
+        if (request.email() != null && !Objects.equals(request.email(), customer.getEmail())) {
+            checkIfEmailExists(request.email(), customer.getEmail());
+            customer.setEmail(request.email());
+            dataChanged = true;
+        }
+        if (request.age() != null && !Objects.equals(request.age(), customer.getAge())) {
+            customer.setAge(request.age());
+            dataChanged = true;
+        }
+
+        if (!dataChanged)
+            throw new RequestValidationException("no data changes found");
+
+        return this.customerDao.updateCustomer(customer);
+    }
+
 }
