@@ -19,13 +19,18 @@ public class CustomerController {
         return this.customerService.getAllCustomers();
     }
 
-    @GetMapping("/{customerId}")
-    public Customer getCustomer(@PathVariable(name = "customerId") Integer customerId) {
+    @GetMapping("/{id}")
+    public Customer getCustomer(@PathVariable(name = "id") Integer customerId) {
         return this.customerService.getCustomerById(customerId);
     }
 
     @PostMapping
     public Customer saveCustomer(@RequestBody CustomerRegistrationRequest request) {
         return this.customerService.saveCustomer(request);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCustomer(@PathVariable(name = "id") Integer id) {
+        this.customerService.deleteCustomerById(id);
     }
 }

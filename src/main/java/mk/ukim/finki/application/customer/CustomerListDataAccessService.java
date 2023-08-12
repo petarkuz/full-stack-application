@@ -2,6 +2,7 @@ package mk.ukim.finki.application.customer;
 
 import org.springframework.stereotype.Repository;
 
+import java.lang.module.ResolutionException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +40,20 @@ public class CustomerListDataAccessService implements CustomerDao {
     public boolean existsCustomerWithEmail(String email) {
         return customerList.stream()
                 .anyMatch(customer -> customer.getEmail().equals(email));
+    }
+
+    @Override
+    public void deleteCustomerById(Integer id) {
+        customerList.stream()
+                .filter(customer -> customer.getId().equals(id))
+                .findFirst()
+                .ifPresent(customerList::remove);
+    }
+
+    @Override
+    public boolean existsCustomerWithId(Integer id) {
+        return customerList.stream()
+                .anyMatch(customer -> customer.getId().equals(id));
     }
 
 }
