@@ -1,6 +1,5 @@
 package mk.ukim.finki.application.customer;
 
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -23,5 +22,15 @@ public class CustomerJPADataAccessService implements CustomerDao {
     @Override
     public Optional<Customer> selectCustomerById(Integer customerId) {
         return this.customerRepository.findById(customerId);
+    }
+
+    @Override
+    public Customer saveCustomer(Customer customer) {
+        return this.customerRepository.save(customer);
+    }
+
+    @Override
+    public boolean existsCustomerWithEmail(String email) {
+        return this.customerRepository.existsCustomerByEmail(email);
     }
 }

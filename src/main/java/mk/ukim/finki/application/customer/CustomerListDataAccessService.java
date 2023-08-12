@@ -29,4 +29,16 @@ public class CustomerListDataAccessService implements CustomerDao {
                 .findFirst();
     }
 
+    @Override
+    public Customer saveCustomer(Customer customer) {
+        customerList.add(customer);
+        return customer;
+    }
+
+    @Override
+    public boolean existsCustomerWithEmail(String email) {
+        return customerList.stream()
+                .anyMatch(customer -> customer.getEmail().equals(email));
+    }
+
 }
