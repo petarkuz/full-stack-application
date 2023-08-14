@@ -1,5 +1,6 @@
 package mk.ukim.finki.application;
 
+import com.github.javafaker.Faker;
 import mk.ukim.finki.application.customer.Customer;
 import mk.ukim.finki.application.customer.CustomerRepository;
 import org.springframework.boot.CommandLineRunner;
@@ -18,12 +19,23 @@ public class Main {
     @Bean
     CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
         return args -> {
-            List<Customer> customers = List.of(
-                    new Customer("Alex", "alexdumphy@gmail.com", 22),
-                    new Customer("Haily", "queenh@gmail.com", 25)
+//            List<Customer> customers = List.of(
+//                    new Customer("Alex", "alexdumphy@gmail.com", 22),
+//                    new Customer("Haily", "queenh@gmail.com", 25)
+//            );
+
+            Faker faker = new Faker();
+
+            String firstName = faker.name().firstName();
+            String laseName = faker.name().lastName();
+
+            Customer customer = new Customer(
+                    firstName,
+                    String.format("%s.%s@app.com", firstName.toLowerCase(), laseName.toLowerCase()),
+                    faker.number().numberBetween(16, 99)
             );
 
-            customerRepository.saveAll(customers);
+            customerRepository.save(customer);
         };
 
     }
