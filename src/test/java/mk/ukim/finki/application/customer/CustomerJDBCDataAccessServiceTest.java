@@ -32,11 +32,11 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
 
         this.underTest.saveCustomer(customer);
         // When
-        List<Customer> actualCustomer = this.underTest.selectAllCustomers();
+        List<Customer> actualCustomers = this.underTest.selectAllCustomers();
 
         // Then
-        assertThat(actualCustomer).isNotEmpty();
-        assertThat(actualCustomer).hasSize(1);
+        assertThat(actualCustomers).isNotEmpty();
+        assertThat(actualCustomers).hasSize(1);
     }
 
     @Test
