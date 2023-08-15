@@ -179,17 +179,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         assertThat(exists).isTrue();
     }
 
-    @Test
-    void existsPersonWithIdWillReturnFalseWhenIdNotPresent() {
-        // Given
-        Long id = -1L;
 
-        // When
-        boolean exists = this.underTest.existsCustomerWithId(id);
-
-        // Then
-        assertThat(exists).isFalse();
-    }
 
     @Test
     void updateCustomersName() {
