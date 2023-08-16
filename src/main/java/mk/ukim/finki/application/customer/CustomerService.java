@@ -28,14 +28,14 @@ public class CustomerService {
                 .orElseThrow(() -> new ResourceNotFoundException("customer with id [%s] not found".formatted(id)));
     }
 
-    private void checkIfEmailExists(String request, String customer) {
-        if (this.customerDao.existsCustomerWithEmail(request))
-            throw new DuplicateResourceException("customer with email [%s] already exists".formatted(customer));
+    private void checkIfEmailExists(String requestEmail) {
+        if (this.customerDao.existsCustomerWithEmail(requestEmail))
+            throw new DuplicateResourceException("customer with email [%s] already exists".formatted(requestEmail));
     }
 
     public Customer saveCustomer(CustomerRegistrationRequest request) {
         String email = request.email();
-        checkIfEmailExists(email, email);
+        checkIfEmailExists(email);
 
         Customer customer = new Customer(
                 request.name(),
@@ -63,7 +63,7 @@ public class CustomerService {
             dataChanged = true;
         }
         if (request.email() != null && !Objects.equals(request.email(), customer.getEmail())) {
-            checkIfEmailExists(request.email(), customer.getEmail());
+            checkIfEmailExists(request.email());
             customer.setEmail(request.email());
             dataChanged = true;
         }
