@@ -22,7 +22,6 @@
 		<java.version>17</java.version>
 		<mave.compiler.source>17</mave.compiler.source>
 		<mave.compiler.target>17</mave.compiler.target>
-<!--		<testcontainers.reuse.enable>true</testcontainers.reuse.enable>-->
 	</properties>
 
 	<dependencies>
