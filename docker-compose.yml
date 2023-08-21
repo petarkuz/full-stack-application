@@ -15,7 +15,7 @@ services:
     restart: unless-stopped
   spring-boot-application:
     container_name: spring-boot-application
-    image: kuzmanoski/spring-boot-application
+    image: kuzmanoski/sprig-boot-application
     ports:
       - "8082:8082"
     networks:
