@@ -1,0 +1,23 @@
+{
+  "AWSEBDockerrunVersion": 2,
+  "containerDefinitions": [
+    {
+      "name": "spring-boot-application",
+      "image": "kuzmanoski/sprig-boot-application:latest",
+      "essential": true,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8082
+        }
+      ],
+      "environment": [
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://awseb-e-pz3ruhspne-stack-awsebrdsdatabase-tl3f2itqs83z.celswdmxhcr1.er-west-1.rds.amazonaws.com:5432/cluster"
+        }
+      ]
+    }
+  ]
+}
