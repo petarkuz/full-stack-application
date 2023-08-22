@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "spring-boot-application",
-      "image": "kuzmanoski/sprig-boot-application:latest",
+      "image": "kuzmanoski/spring-boot-application:latest",
       "essential": true,
       "memory": 512,
       "portMappings": [
