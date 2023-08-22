@@ -20,7 +20,7 @@
 		<mave.compiler.source>17</mave.compiler.source>
 		<mave.compiler.target>17</mave.compiler.target>
 		<docker.username>kuzmanoski</docker.username>
-		<docker.image.name>spring-boot-application</docker.image.name>
+		<docker.image.name>sprig-boot-application</docker.image.name>
 		<docker.image.tag/>
 	</properties>
 
