@@ -106,4 +106,4 @@ jobs:
         run: >
           curl -X POST -H 'Content-type: application/json'
           --data '{"text":"Deployment and commit completed."}' 
-          ${{ secrets.SLACK_WEBHO
+          ${{ secrets.SLACK_WEBHOOK_URL }}
