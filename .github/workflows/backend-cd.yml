@@ -64,7 +64,7 @@ jobs:
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Update Dockerrun.aws.json api image tag with new build number
         run: |
-          sed -i -E 's_(kuzmanoski/sprig-boot-application:latest:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' Dockerrun.aws.json
+          sed -i -E 's_(kuzmanoski/sprig-boot-application:latest:)([^"]*)_\1'${{steps.build-number.outputs.BUILD_NUMBER}}'_' backend/Dockerrun.aws.json
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
