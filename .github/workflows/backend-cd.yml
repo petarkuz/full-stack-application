@@ -31,7 +31,6 @@ jobs:
     steps:
       - name: Set working directory
         run: |
-          cd backend
           pwd
           ls
 
