@@ -27,15 +27,8 @@ jobs:
           --health-retries 5
     defaults:
       run:
-        working-directory: ./backend
+        working-directory: backend
     steps:
-      - name: Debug Information
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Contents of directory:"
-          ls -al
-          echo "Repository: $GITHUB_REPOSITORY"
-          echo "Branch: $GITHUB_REF"
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
