@@ -25,14 +25,15 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    defaults:
-      run:
-        working-directory: ./backend
+#    defaults:
+#      run:
+#        working-directory: ./backend
     steps:
-#      - name: Set working directory
-#        run: |
-#          cd backend
-#          pwd
+      - name: Set working directory
+        run: |
+          cd backend
+          pwd
+          ls
 
       - name: Send Slack Message
         run: |
