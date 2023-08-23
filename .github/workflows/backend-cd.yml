@@ -25,10 +25,9 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-    defaults:
-      run:
-        working-directory: ./backend
-
+#    defaults:
+#      run:
+#        working-directory: ./backend
     steps:
       - name: Send Slack Message
         run: >
@@ -56,6 +55,7 @@ jobs:
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Build Package Push with Maven
         run: |
+          cd backend
           mvn -ntp -B verify -Ddocker.image.tag=${{steps.build-number.outputs.BUILD_NUMBER}} jib:build
       - name: Send Slack Message
         run: >
