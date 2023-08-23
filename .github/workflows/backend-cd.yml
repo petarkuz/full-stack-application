@@ -25,10 +25,21 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-#    defaults:
-#      run:
-#        working-directory: ./backend
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
+      - name: Set working directory
+        run: |
+          cd backend
+          pwd
+
+      - name: Send Slack Message
+        run: |
+          echo "Current directory: $(pwd)"
+          echo "Contents of directory:"
+          ls -al
+
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
@@ -95,10 +106,4 @@ jobs:
         run: >
           curl -X POST -H 'Content-type: application/json'
           --data '{"text":"Deployment and commit completed."}' 
-          ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: Send Slack Message
-        if: always()
-        run: >
-          curl -X POST -H 'Content-type: application/json'
-          --data '{"text":"Job Status ${{ job.status }}."}' 
-          ${{ secrets.SLACK_WEBHOOK_URL }}
+          ${{ secrets.SLACK_WEBHO
