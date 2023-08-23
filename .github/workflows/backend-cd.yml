@@ -29,17 +29,6 @@ jobs:
 #      run:
 #        working-directory: ./backend
     steps:
-      - name: Set working directory
-        run: |
-          pwd
-          ls
-
-      - name: Send Slack Message
-        run: |
-          echo "Current directory: $(pwd)"
-          echo "Contents of directory:"
-          ls -al
-
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
