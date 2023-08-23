@@ -29,6 +29,12 @@ jobs:
       run:
         working-directory: ./backend
     steps:
+      - name: Debug Working Directory
+        run: |
+          pwd
+          ls -al
+          working-directory: ./backend
+
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
