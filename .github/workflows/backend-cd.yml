@@ -33,7 +33,7 @@ jobs:
       - name: Send Commit Message and Sha
         run: >
           curl -X POST -H 'Content-type: application/json' 
-          --data '{"text":"github: https://github.com/borat42/full-stack-application/${{ github.sha }} - ${{ github.event.head_commit.message }}"}' 
+          --data '{"text":"github: https://github.com/borat42/full-stack-application/commit/${{ github.sha }} - ${{ github.event.head_commit.message }}"}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
         run: >
