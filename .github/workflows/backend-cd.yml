@@ -25,16 +25,21 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
-#    defaults:
-#      run:
-#        working-directory: ./backend
+    #    defaults:
+    #      run:
+    #        working-directory: ./backend
     steps:
+      - uses: actions/checkout@v3
+      - name: Send Commit Message and Sha
+        run: >
+          curl -X POST -H 'Content-type: application/json' 
+          --data '{"text":"github: https://github.com/borat42/full-stack-application/${{ github.sha }} - ${{ github.event.head_commit.message }}"}' 
+          ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: Send Slack Message
         run: >
           curl -X POST -H 'Content-type: application/json' 
           --data '{"text":"Deployment started."}' 
           ${{ secrets.SLACK_WEBHOOK_URL }}
-      - uses: actions/checkout@v3
       - uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
