@@ -40,8 +40,8 @@ public class CustomerService {
         Customer customer = new Customer(
                 request.name(),
                 request.email(),
-                request.age()
-        );
+                request.age(),
+                request.gender());
 
         return this.customerDao.saveCustomer(customer);
     }
@@ -68,6 +68,10 @@ public class CustomerService {
             dataChanged = true;
         }
         if (request.age() != null && !Objects.equals(request.age(), customer.getAge())) {
+            customer.setAge(request.age());
+            dataChanged = true;
+        }
+        if (request.gender() != null && !Objects.equals(request.gender(), customer.getGender())) {
             customer.setAge(request.age());
             dataChanged = true;
         }

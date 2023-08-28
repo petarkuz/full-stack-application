@@ -1,11 +1,10 @@
 package mk.ukim.finki.application.customer;
 
-import org.junit.jupiter.api.AfterEach;
+import mk.ukim.finki.application.enums.Gender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.verify;
@@ -51,8 +50,7 @@ class CustomerJPADataAccessServiceTest {
     void saveCustomer() {
         // Given
         Customer customer = new Customer(
-                1L, "Foo", "foo.fighter@rnr.com", 1
-        );
+                1L, "Foo", "foo.fighter@rnr.com", 1, Gender.MALE);
 
         // When
         this.underTest.saveCustomer(customer);
@@ -101,8 +99,7 @@ class CustomerJPADataAccessServiceTest {
     void updateCustomer() {
         // Given
         Customer customer = new Customer(
-                1L, "Foo", "foo.fighter@rnr.com", 1
-        );
+                1L, "Foo", "foo.fighter@rnr.com", 1, Gender.MALE);
 
         // When
         this.underTest.updateCustomer(customer);

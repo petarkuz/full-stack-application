@@ -1,5 +1,6 @@
 package mk.ukim.finki.application.customer;
 
+import mk.ukim.finki.application.enums.Gender;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
@@ -13,8 +14,8 @@ public class CustomerListDataAccessService implements CustomerDao {
 
     static {
         customerList = new ArrayList<>();
-        customerList.add(new Customer(1L, "Alex", "alexdumphy@gmail.com", 22));
-        customerList.add(new Customer(2L, "Haily", "queenh@gmail.com", 25));
+        customerList.add(new Customer(1L, "Alex", "alexdumphy@gmail.com", 22, Gender.FEMALE));
+        customerList.add(new Customer(2L, "Haily", "queenh@gmail.com", 25, Gender.FEMALE));
     }
 
     @Override

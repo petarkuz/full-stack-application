@@ -1,6 +1,7 @@
 package mk.ukim.finki.application.customer;
 
 import mk.ukim.finki.application.AbstractTestcontainers;
+import mk.ukim.finki.application.enums.Gender;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -21,7 +22,8 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         String email = FAKER.internet().emailAddress();
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
-        Customer customer = new Customer(name, email, age);
+        Gender gender = Gender.MALE;
+        Customer customer = new Customer(name, email, age, gender);
 
         this.underTest.save(customer);
 
@@ -49,7 +51,8 @@ class CustomerRepositoryTest extends AbstractTestcontainers {
         String email = FAKER.internet().emailAddress();
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
-        Customer customer = new Customer(name, email, age);
+        Gender gender = Gender.MALE;
+        Customer customer = new Customer(name, email, age, gender);
 
         this.underTest.save(customer);
 

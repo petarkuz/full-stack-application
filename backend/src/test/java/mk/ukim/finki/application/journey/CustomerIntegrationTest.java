@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import mk.ukim.finki.application.customer.Customer;
 import mk.ukim.finki.application.customer.CustomerRegistrationRequest;
 import mk.ukim.finki.application.customer.CustomerUpdateRequest;
+import mk.ukim.finki.application.enums.Gender;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -30,8 +31,9 @@ public class CustomerIntegrationTest {
         String name = this.faker.name().firstName();
         String email = this.faker.internet().emailAddress();
         int age = this.faker.number().numberBetween(16, 99);
+        Gender gender = Math.random() > 0.5 ? Gender.MALE : Gender.FEMALE;
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         this.webTestClient.post()
@@ -54,8 +56,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         Customer expectedCustomer = new Customer(
-                name, email, age
-        );
+                name, email, age, gender);
 
         assertThat(responseBody)
                 .usingRecursiveFieldByFieldElementComparatorIgnoringFields("id")
@@ -84,8 +85,9 @@ public class CustomerIntegrationTest {
         String name = this.faker.name().firstName();
         String email = this.faker.internet().emailAddress();
         int age = this.faker.number().numberBetween(16, 99);
+        Gender gender = Math.random() > 0.5 ? Gender.MALE : Gender.FEMALE;
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         this.webTestClient.post()
@@ -133,8 +135,9 @@ public class CustomerIntegrationTest {
         String name = this.faker.name().firstName();
         String email = this.faker.internet().emailAddress();
         int age = this.faker.number().numberBetween(16, 99);
+        Gender gender = Math.random() > 0.5 ? Gender.MALE : Gender.FEMALE;
         CustomerRegistrationRequest request = new CustomerRegistrationRequest(
-                name, email, age
+                name, email, age, gender
         );
 
         this.webTestClient.post()
@@ -164,7 +167,7 @@ public class CustomerIntegrationTest {
 
         String updatedName = faker.name().firstName();
         CustomerUpdateRequest updateRequest = new CustomerUpdateRequest(
-                updatedName, null, null
+                updatedName, null, null, null
         );
 
         this.webTestClient.put()
@@ -187,8 +190,7 @@ public class CustomerIntegrationTest {
                 .getResponseBody();
 
         Customer expectedCustomer = new Customer(
-                id, updatedName, email, age
-        );
+                id, updatedName, email, age, gender);
 
         assertThat(updatedCustomer)
                 .isEqualTo(expectedCustomer);
