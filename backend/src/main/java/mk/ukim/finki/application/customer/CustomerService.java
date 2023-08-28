@@ -72,7 +72,7 @@ public class CustomerService {
             dataChanged = true;
         }
         if (request.gender() != null && !Objects.equals(request.gender(), customer.getGender())) {
-            customer.setAge(request.age());
+            customer.setGender(request.gender());
             dataChanged = true;
         }
 
