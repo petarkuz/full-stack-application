@@ -13,6 +13,7 @@ services:
     networks:
       - db
     restart: unless-stopped
+
   spring-boot-application:
     container_name: spring-boot-application
     image: kuzmanoski/sprig-boot-application

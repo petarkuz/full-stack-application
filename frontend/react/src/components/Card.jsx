@@ -1,31 +1,34 @@
 'use client'
 
 import {
-    Heading,
     Avatar,
     Box,
     Center,
-    Image,
     Flex,
-    Text,
+    Heading,
+    Image,
     Stack,
-    Button,
-    useColorModeValue,
+    Tag,
     TagLabel,
-    Tag
+    Text,
+    useColorModeValue
 } from '@chakra-ui/react'
+import DeleteCustomerButton from "./shared/DeleteCustomerButton.jsx";
+import UpdateCustomerDrawer from "./UpdateCustomerDrawer.jsx";
 
-export default function CardWithImage({id, name, email, age, gender, imageNumber}) {
+export default function CardWithImage({id, name, email, age, gender, imageNumber, handleDeleteCustomer, fetchCustomers}) {
     const randomUserGender = gender === "MALE" ? "men" : "women";
-    const color = gender === "MALE" ? "blue" : "pink";
+    const color = gender === "MALE" ? "teal" : "pink";
 
     return (
         <Center py={6}>
             <Box
-                maxW={'350px'}
+                maxW={'300px'}
+                minW={'300px'}
+                m={2}
                 w={'full'}
                 bg={useColorModeValue('white', 'gray.800')}
-                boxShadow={'2xl'}
+                boxShadow={'lg'}
                 rounded={'md'}
                 overflow={'hidden'}>
                 <Image
@@ -61,9 +64,21 @@ export default function CardWithImage({id, name, email, age, gender, imageNumber
                         <Text color={'gray.500'}>{email}</Text>
                         <Text color={'gray.500'}>Age: {age} | {gender}</Text>
                     </Stack>
-
                 </Box>
+                <Stack direction='row' justify={"center"} spacing={6} m={6} >
+                    <UpdateCustomerDrawer
+                        initialValues={{name, email, age, gender}}
+                        fetchCustomers={fetchCustomers}
+                        customerId={id}
+                    />
+                    <DeleteCustomerButton
+                        handleDeleteCustomer={handleDeleteCustomer}
+                        customerId={id}
+                        name={name}
+                    />
+                </Stack>
             </Box>
+
         </Center>
     )
 }
