@@ -26,6 +26,17 @@ services:
     restart: unless-stopped
     command: ["--spring.datasource.url=jdbc:postgresql://db:5432/customer"]
 
+  react-application:
+    container_name: react-application
+    image: kuzmanoski/react-application
+    build:
+      context: frontend/react
+    ports:
+      - "3000:5173"
+    depends_on:
+      - spring-boot-application
+    restart: unless-stopped
+
 networks:
   db:
     driver: bridge
