@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import java.util.UUID;
 
 @SpringBootApplication
 public class Main {
@@ -16,7 +18,7 @@ public class Main {
     }
 
     @Bean
-    CommandLineRunner commandLineRunner(CustomerRepository customerRepository) {
+    CommandLineRunner commandLineRunner(CustomerRepository customerRepository, PasswordEncoder passwordEncoder) {
         return args -> {
 //            List<Customer> customers = List.of(
 //                    new Customer("Alex", "alexdumphy@gmail.com", 22),
@@ -32,7 +34,7 @@ public class Main {
             Customer customer = new Customer(
                     firstName,
                     String.format("%s.%s@app.com", firstName.toLowerCase(), laseName.toLowerCase()),
-                    faker.number().numberBetween(16, 99),
+                    passwordEncoder.encode(UUID.randomUUID().toString()), faker.number().numberBetween(16, 99),
                     gender);
 
             customerRepository.save(customer);

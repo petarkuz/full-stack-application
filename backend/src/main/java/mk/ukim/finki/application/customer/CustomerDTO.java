@@ -2,12 +2,15 @@ package mk.ukim.finki.application.customer;
 
 import mk.ukim.finki.application.enums.Gender;
 
-public record CustomerRegistrationRequest (
+import java.util.List;
+
+public record CustomerDTO (
+        Long id,
         String name,
         String email,
-        String password,
+        Gender gender,
         Integer age,
-        Gender gender
+        List<String> roles,
+        String username
 ) {
-
 }

@@ -25,8 +25,8 @@ public class CustomerJPADataAccessService implements CustomerDao {
     }
 
     @Override
-    public Customer saveCustomer(Customer customer) {
-        return this.customerRepository.save(customer);
+    public void saveCustomer(Customer customer) {
+        this.customerRepository.save(customer);
     }
 
     @Override
@@ -47,5 +47,10 @@ public class CustomerJPADataAccessService implements CustomerDao {
     @Override
     public Customer updateCustomer(Customer customer) {
         return this.customerRepository.save(customer);
+    }
+
+    @Override
+    public Optional<Customer> selectCustomerByEmail(String email) {
+        return this.customerRepository.findCustomerByEmail(email);
     }
 }

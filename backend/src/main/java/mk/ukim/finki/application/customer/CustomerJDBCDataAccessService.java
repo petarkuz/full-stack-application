@@ -20,7 +20,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     @Override
     public List<Customer> selectAllCustomers() {
         String sql = """
-                SELECT id, name, email, age, gender 
+                SELECT id, name, email, password, age, gender 
                 FROM customer;
                 """;
 
@@ -30,7 +30,7 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     @Override
     public Optional<Customer> selectCustomerById(Long id) {
         String sql = """
-                SELECT id, name, email, age, gender
+                SELECT id, name, email, password, age, gender
                 FROM customer
                 WHERE id = ?
                 """;
@@ -41,15 +41,13 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
     }
 
     @Override
-    public Customer saveCustomer(Customer customer) {
+    public void saveCustomer(Customer customer) {
         String sql = """
-                INSERT INTO customer(name, email, age, gender)
-                VALUES (?, ?, ?, ?)
+                INSERT INTO customer(name, email, password, age, gender)
+                VALUES (?, ?, ?, ?, ?)
                 """;
 
-        this.jdbcTemplate.update(sql, customer.getName(), customer.getEmail(), customer.getAge(), customer.getGender().name());
-
-        return customer;
+        this.jdbcTemplate.update(sql, customer.getName(), customer.getEmail(), customer.getPassword(), customer.getAge(), customer.getGender().name());
     }
 
     @Override
@@ -141,5 +139,18 @@ public class CustomerJDBCDataAccessService implements CustomerDao {
         }
 
         return selectCustomerById(customer.getId()).get();
+    }
+
+    @Override
+    public Optional<Customer> selectCustomerByEmail(String email) {
+        String sql = """
+                SELECT id, name, email, password, age, gender
+                FROM customer
+                WHERE email = ?
+                """;
+
+        return this.jdbcTemplate.query(sql, this.customerRowMapper, email)
+                .stream()
+                .findFirst();
     }
 }

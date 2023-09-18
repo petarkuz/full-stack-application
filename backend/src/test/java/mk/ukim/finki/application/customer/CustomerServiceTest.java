@@ -10,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
@@ -25,9 +26,14 @@ class CustomerServiceTest {
     @Mock
     private CustomerDao customerDao;
 
+    @Mock
+    private PasswordEncoder passwordEncoder;
+
+    private final CustomerDTOMapper customerDTOMapper = new CustomerDTOMapper();
+
     @BeforeEach
     void setUp() {
-        this.underTest = new CustomerService(this.customerDao);
+        this.underTest = new CustomerService(this.customerDao, passwordEncoder, customerDTOMapper);
     }
 
     @Test
@@ -46,16 +52,18 @@ class CustomerServiceTest {
         // Given
         Long id = 1L;
         Customer customer = new Customer(
-                id, "Foo", "foo.fighter@rnr.com", 1, Gender.MALE);
+                id, "Foo", "foo.fighter@rnr.com", "password", 1, Gender.MALE);
+
+        CustomerDTO expected = this.customerDTOMapper.apply(customer);
 
         // When
         when(this.customerDao.selectCustomerById(id))
                 .thenReturn(Optional.of(customer));
 
-        Customer actualCustomer = this.underTest.getCustomerById(id);
+        CustomerDTO actualCustomer = this.underTest.getCustomerById(id);
 
         // Then
-        assertThat(actualCustomer).isEqualTo(customer);
+        assertThat(actualCustomer).isEqualTo(expected);
     }
 
     @Test
@@ -80,13 +88,18 @@ class CustomerServiceTest {
         String name = "Foo";
         Integer age = 1;
         Gender gender = Gender.MALE;
+        String password = "password";
+        String passwordHash = "7a05fb50454f474b8c5f0c7148adc157";
         CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest(
-                name, email, age, gender
+                name, email, password, age, gender
         );
 
         // When
         when(this.customerDao.existsCustomerWithEmail(email))
                 .thenReturn(false);
+
+        when(this.passwordEncoder.encode(password))
+                .thenReturn(passwordHash);
 
         this.underTest.saveCustomer(customerRegistrationRequest);
 
@@ -100,6 +113,7 @@ class CustomerServiceTest {
         assertThat(capturedCustomer.getName()).isEqualTo(name);
         assertThat(capturedCustomer.getEmail()).isEqualTo(email);
         assertThat(capturedCustomer.getAge()).isEqualTo(age);
+        assertThat(capturedCustomer.getPassword()).isEqualTo(passwordHash);
         assertThat(capturedCustomer.getGender()).isEqualTo(gender);
     }
 
@@ -108,10 +122,11 @@ class CustomerServiceTest {
         // Given
         String email = "foo.fighter@rnr.com";
         String name = "Foo";
+        String password = "password";
         Integer age = 1;
         Gender gender = Gender.MALE;
         CustomerRegistrationRequest customerRegistrationRequest = new CustomerRegistrationRequest(
-                name, email, age, gender
+                name, email, password, age, gender
         );
 
         // When
@@ -163,6 +178,7 @@ class CustomerServiceTest {
         // Given
         Long id = 1L;
         String email = "foo.fighter@rnr.com";
+        String password = "password";
         String name = "Foo";
         Integer age = 1;
         Gender gender = Gender.MALE;
@@ -170,7 +186,7 @@ class CustomerServiceTest {
         String requestName = "Dave";
 
         Customer customer = new Customer(
-                id, name, email, age, gender);
+                id, name, email, password, age, gender);
         CustomerUpdateRequest request = new CustomerUpdateRequest(
                 requestName, null, null, null
         );
@@ -199,6 +215,7 @@ class CustomerServiceTest {
         // Given
         Long id = 1L;
         String email = "foo.fighter@rnr.com";
+        String password = "password";
         String name = "Foo";
         Integer age = 1;
         Gender gender = Gender.MALE;
@@ -206,7 +223,7 @@ class CustomerServiceTest {
         String requestEmail = "dave.grohl@foo.com";
 
         Customer customer = new Customer(
-                id, name, email, age, gender);
+                id, name, email, password, age, gender);
         CustomerUpdateRequest request = new CustomerUpdateRequest(
                 null, requestEmail, null, null
         );
@@ -237,6 +254,7 @@ class CustomerServiceTest {
         // Given
         Long id = 1L;
         String email = "foo.fighter@rnr.com";
+        String password = "password";
         String name = "Foo";
         Integer age = 1;
         Gender gender = Gender.MALE;
@@ -244,7 +262,7 @@ class CustomerServiceTest {
         String requestEmail = "dave.grohl@foo.com";
 
         Customer customer = new Customer(
-                id, name, email, age, gender);
+                id, name, email, password, age, gender);
         CustomerUpdateRequest request = new CustomerUpdateRequest(
                 null, requestEmail, null, null
         );
@@ -268,6 +286,7 @@ class CustomerServiceTest {
         // Given
         Long id = 1L;
         String email = "foo.fighter@rnr.com";
+        String password = "password";
         String name = "Foo";
         Integer age = 1;
         Gender gender = Gender.MALE;
@@ -275,7 +294,7 @@ class CustomerServiceTest {
         Integer requestAge = 54;
 
         Customer customer = new Customer(
-                id, name, email, age, gender);
+                id, name, email, password, age, gender);
         CustomerUpdateRequest request = new CustomerUpdateRequest(
                 null, null, requestAge, null
         );
@@ -304,6 +323,7 @@ class CustomerServiceTest {
         // Given
         Long id = 1L;
         String email = "foo.fighter@rnr.com";
+        String password = "password";
         String name = "Foo";
         Integer age = 1;
         Gender gender = Gender.MALE;
@@ -311,7 +331,7 @@ class CustomerServiceTest {
         Gender requestGender = Gender.FEMALE;
 
         Customer customer = new Customer(
-                id, name, email, age, gender);
+                id, name, email, password, age, gender);
         CustomerUpdateRequest request = new CustomerUpdateRequest(
                 null, null, null, requestGender
         );
@@ -341,6 +361,7 @@ class CustomerServiceTest {
         Long id = 1L;
         String email = "foo.fighter@rnr.com";
         String name = "Foo";
+        String password = "password";
         Integer age = 1;
         Gender gender = Gender.MALE;
 
@@ -350,7 +371,7 @@ class CustomerServiceTest {
         Gender requestGender = Gender.FEMALE;
 
         Customer customer = new Customer(
-                id, name, email, age, gender);
+                id, name, email, password, age, gender);
         CustomerUpdateRequest request = new CustomerUpdateRequest(
                 requestName, requestEmail, requestAge, requestGender
         );
@@ -382,11 +403,12 @@ class CustomerServiceTest {
         Long id = 1L;
         String email = "foo.fighter@rnr.com";
         String name = "Foo";
+        String password = "password";
         Integer age = 1;
         Gender gender = Gender.MALE;
 
         Customer customer = new Customer(
-                id, name, email, age, gender);
+                id, name, email, password, age, gender);
         CustomerUpdateRequest request = new CustomerUpdateRequest(
                 name, email, age, gender
         );

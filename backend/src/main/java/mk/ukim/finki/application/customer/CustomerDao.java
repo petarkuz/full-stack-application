@@ -8,7 +8,7 @@ public interface CustomerDao {
 
     Optional<Customer> selectCustomerById(Long id);
 
-    Customer saveCustomer(Customer customer);
+    void saveCustomer(Customer customer);
 
     boolean existsCustomerWithEmail(String email);
 
@@ -17,4 +17,6 @@ public interface CustomerDao {
     boolean existsCustomerWithId(Long id);
 
     Customer updateCustomer(Customer customer);
+
+    Optional<Customer> selectCustomerByEmail(String email);
 }

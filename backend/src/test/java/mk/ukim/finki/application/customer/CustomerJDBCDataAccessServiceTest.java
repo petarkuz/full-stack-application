@@ -30,7 +30,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
         // When
@@ -47,7 +47,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -90,7 +90,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
 
         // When
@@ -114,7 +114,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -143,7 +143,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -168,7 +168,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -193,7 +193,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -232,7 +232,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -271,7 +271,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -310,7 +310,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -349,7 +349,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 
@@ -385,7 +385,7 @@ class CustomerJDBCDataAccessServiceTest extends AbstractTestcontainers {
         String name = FAKER.name().firstName();
         Integer age = FAKER.random().nextInt(16, 99);
         Gender gender = Gender.MALE;
-        Customer customer = new Customer(name, email, age, gender);
+        Customer customer = new Customer(name, email, "password", age, gender);
 
         this.underTest.saveCustomer(customer);
 

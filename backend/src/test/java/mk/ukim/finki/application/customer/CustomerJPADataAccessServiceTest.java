@@ -50,7 +50,7 @@ class CustomerJPADataAccessServiceTest {
     void saveCustomer() {
         // Given
         Customer customer = new Customer(
-                1L, "Foo", "foo.fighter@rnr.com", 1, Gender.MALE);
+                1L, "Foo", "foo.fighter@rnr.com", "password", 1, Gender.MALE);
 
         // When
         this.underTest.saveCustomer(customer);
@@ -99,7 +99,7 @@ class CustomerJPADataAccessServiceTest {
     void updateCustomer() {
         // Given
         Customer customer = new Customer(
-                1L, "Foo", "foo.fighter@rnr.com", 1, Gender.MALE);
+                1L, "Foo", "foo.fighter@rnr.com", "password", 1, Gender.MALE);
 
         // When
         this.underTest.updateCustomer(customer);

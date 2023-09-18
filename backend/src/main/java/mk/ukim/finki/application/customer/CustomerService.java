@@ -4,27 +4,37 @@ import mk.ukim.finki.application.exception.DuplicateResourceException;
 import mk.ukim.finki.application.exception.RequestValidationException;
 import mk.ukim.finki.application.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
 
     private final CustomerDao customerDao;
+    private final CustomerDTOMapper customerDTOMapper;
+    private final PasswordEncoder passwordEncoder;
 
-    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao) {
+    public CustomerService(@Qualifier("jdbc") CustomerDao customerDao, PasswordEncoder passwordEncoder, CustomerDTOMapper customerDTOMapper) {
         this.customerDao = customerDao;
+        this.passwordEncoder = passwordEncoder;
+        this.customerDTOMapper = customerDTOMapper;
     }
 
-    public List<Customer> getAllCustomers() {
-        return this.customerDao.selectAllCustomers();
+    public List<CustomerDTO> getAllCustomers() {
+        return this.customerDao.selectAllCustomers()
+                .stream()
+                .map(this.customerDTOMapper)
+                .collect(Collectors.toList());
     }
 
-    public Customer getCustomerById(Long id) {
+    public CustomerDTO getCustomerById(Long id) {
         return this.customerDao
                 .selectCustomerById(id)
+                .map(this.customerDTOMapper)
                 .orElseThrow(() -> new ResourceNotFoundException("customer with id [%s] not found".formatted(id)));
     }
 
@@ -33,17 +43,18 @@ public class CustomerService {
             throw new DuplicateResourceException("customer with email [%s] already exists".formatted(requestEmail));
     }
 
-    public Customer saveCustomer(CustomerRegistrationRequest request) {
+    public void saveCustomer(CustomerRegistrationRequest request) {
         String email = request.email();
         checkIfEmailExists(email);
 
         Customer customer = new Customer(
                 request.name(),
                 request.email(),
+                this.passwordEncoder.encode(request.password()),
                 request.age(),
                 request.gender());
 
-        return this.customerDao.saveCustomer(customer);
+        this.customerDao.saveCustomer(customer);
     }
 
     public void deleteCustomerById(Long id) {
@@ -54,7 +65,9 @@ public class CustomerService {
     }
 
     public Customer updateCustomer(Long id, CustomerUpdateRequest request) {
-        Customer customer = getCustomerById(id);
+        Customer customer = this.customerDao
+                .selectCustomerById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("customer with id [%s] not found".formatted(id)));
 
         boolean dataChanged = false;
 
