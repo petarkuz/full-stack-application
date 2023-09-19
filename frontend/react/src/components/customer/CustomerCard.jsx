@@ -13,7 +13,7 @@ import {
     Text,
     useColorModeValue
 } from '@chakra-ui/react'
-import DeleteCustomerButton from "./shared/DeleteCustomerButton.jsx";
+import DeleteCustomerButton from "./DeleteCustomerButton.jsx";
 import UpdateCustomerDrawer from "./UpdateCustomerDrawer.jsx";
 
 export default function CardWithImage({id, name, email, age, gender, imageNumber, handleDeleteCustomer, fetchCustomers}) {

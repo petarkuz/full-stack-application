@@ -22,6 +22,8 @@ import {
     Image
 } from '@chakra-ui/react'
 import {FiBell, FiChevronDown, FiCompass, FiHome, FiMenu, FiSettings, FiStar, FiTrendingUp,} from 'react-icons/fi'
+import {useAuth} from "../context/AuthContext.jsx";
+import {useNavigate} from "react-router-dom";
 
 const LinkItems = [
     {name: 'Home', icon: FiHome},
@@ -42,14 +44,15 @@ const SidebarContent = ({onClose, ...rest}) => {
             pos="fixed"
             h="full"
             {...rest}>
-            <Flex h="20" flexDirection="column" alignItems="center" justifyContent="space-between" mx="8" mb={75} mt={2}>
+            <Flex h="20" flexDirection="column" alignItems="center" justifyContent="space-between" mx="8" mb={75}
+                  mt={2}>
                 <Text fontSize="2xl" fontFamily="monospace" fontWeight="bold" mb={5}>
                     Dashboard
                 </Text>
                 <Image
                     borderRadius='full'
-                    boxSize='75px'
-                    src='https://s3-alpha.figma.com/hub/file/1913095808/a7bdc469-cd70-4ea1-bb57-b59204ad8182-cover.png'
+                    boxSize='175px'
+                    src='https://cdn.logo.com/hotlink-ok/logo-social.png'
                     alt='Logo'
                 />
                 <CloseButton display={{base: 'flex', md: 'none'}} onClick={onClose}/>
@@ -99,6 +102,9 @@ const NavItem = ({icon, children, ...rest}) => {
 }
 
 const MobileNav = ({onOpen, ...rest}) => {
+    const {logout, customer} = useAuth();
+    const navigate = useNavigate();
+
     return (
         <Flex
             ml={{base: 0, md: 60}}
@@ -134,19 +140,21 @@ const MobileNav = ({onOpen, ...rest}) => {
                             <HStack>
                                 <Avatar
                                     size={'sm'}
-                                    src={
-                                        'https://images.unsplash.com/photo-1619946794135-5bc917a27793?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9'
-                                    }
+                                    // src={
+                                    //     `https://randomuser.me/api/portraits/${userGender}/${customer?.id}.jpg`
+                                    // }
                                 />
                                 <VStack
                                     display={{base: 'none', md: 'flex'}}
                                     alignItems="flex-start"
                                     spacing="1px"
                                     ml="2">
-                                    <Text fontSize="sm">Justina Clark</Text>
-                                    <Text fontSize="xs" color="gray.600">
-                                        Admin
-                                    </Text>
+                                    <Text fontSize="sm">{customer?.username}</Text>
+                                    {customer?.roles.map((role, index) => (
+                                        <Text key={index} fontSize="xs" color="gray.600">
+                                            {role.slice(5)}
+                                        </Text>)
+                                    )}
                                 </VStack>
                                 <Box display={{base: 'none', md: 'flex'}}>
                                     <FiChevronDown/>
@@ -160,7 +168,12 @@ const MobileNav = ({onOpen, ...rest}) => {
                             <MenuItem>Settings</MenuItem>
                             <MenuItem>Billing</MenuItem>
                             <MenuDivider/>
-                            <MenuItem>Sign out</MenuItem>
+                            <MenuItem onClick={() => {
+                                logout();
+                                navigate("/");
+                            }}>
+                                Sign out
+                            </MenuItem>
                         </MenuList>
                     </Menu>
                 </Flex>

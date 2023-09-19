@@ -1,8 +1,8 @@
 import {Formik, Form, useField} from 'formik';
 import * as Yup from 'yup';
 import {Alert, AlertIcon, Box, Button, Checkbox, FormLabel, Input, Select, Stack} from "@chakra-ui/react";
-import {saveCustomer} from "../services/client.js";
-import {errorNotification, successNotification} from "../services/notification.js";
+import {saveCustomer} from "../../services/client.js";
+import {errorNotification, successNotification} from "../../services/notification.js";
 
 export const MyTextInput = ({label, ...props}) => {
     // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
@@ -69,6 +69,7 @@ const CreateCustomerForm = ({ fetchCustomers, onClose }) => {
                 initialValues={{
                     name: '',
                     email: '',
+                    password: '',
                     age: 0,
                     gender: '',
                 }}
@@ -79,6 +80,9 @@ const CreateCustomerForm = ({ fetchCustomers, onClose }) => {
                     email: Yup.string()
                         .email('Invalid email address')
                         .required('Required'),
+                    password: Yup.string()
+                        .min(6, "Password cannot be less than 6 characters.")
+                        .required("Password is required."),
                     age: Yup.number()
                         .min(16, 'Must be at least 16 years of age')
                         .max(99, 'Must be less than 100 years of age')
@@ -130,6 +134,13 @@ const CreateCustomerForm = ({ fetchCustomers, onClose }) => {
                                 name="email"
                                 type="email"
                                 placeholder="jane@formik.com"
+                            />
+
+                            <MyTextInput
+                                label="Password"
+                                name="password"
+                                type="password"
+                                placeholder="Pick a secure password"
                             />
 
                             <MyTextInput
