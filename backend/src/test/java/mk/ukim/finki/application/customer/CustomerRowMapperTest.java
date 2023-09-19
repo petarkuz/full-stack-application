@@ -34,6 +34,7 @@ class CustomerRowMapperTest {
         when(this.resultSet.getLong("id")).thenReturn(2L);
         when(this.resultSet.getString("name")).thenReturn("Taylor");
         when(this.resultSet.getString("email")).thenReturn("hawk@fighters.com");
+        when(this.resultSet.getString("password")).thenReturn("password");
         when(this.resultSet.getInt("age")).thenReturn(0);
         when(this.resultSet.getString("gender")).thenReturn("MALE");
 
