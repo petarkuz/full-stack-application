@@ -23,6 +23,6 @@ public class AuthenticationController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.AUTHORIZATION, response.token())
-                .body(response.customerDTO().id());
+                .body(response);
     }
 }

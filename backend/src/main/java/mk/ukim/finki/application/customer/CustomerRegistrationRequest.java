@@ -9,5 +9,4 @@ public record CustomerRegistrationRequest (
         Integer age,
         Gender gender
 ) {
-
 }

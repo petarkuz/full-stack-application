@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 import {Button, Stack} from "@chakra-ui/react";
 import {updateCustomer} from "../../services/client.js";
 import {errorNotification, successNotification} from "../../services/notification.js";
-import {MySelect, MyTextInput} from "./CreateCustomerForm.jsx";
+import {MySelect, MyTextInput} from "../shared/CreateCustomerForm.jsx";
 
 // And now we can use these
 const UpdateCustomerForm = ({fetchCustomers, initialValues, customerId, onClose}) => {

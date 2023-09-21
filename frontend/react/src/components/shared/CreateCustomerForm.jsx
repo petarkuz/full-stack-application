@@ -62,7 +62,7 @@ export const MySelect = ({label, ...props}) => {
 };
 
 // And now we can use these
-const CreateCustomerForm = ({ fetchCustomers, onClose }) => {
+const CreateCustomerForm = ({ onSuccess, onClose }) => {
     return (
         <>
             <Formik
@@ -104,8 +104,8 @@ const CreateCustomerForm = ({ fetchCustomers, onClose }) => {
                                 "Customer saved",
                                 `${customer.name} was successfully saved`
                             )
-                            fetchCustomers();
-                            onClose();
+                            onSuccess(res.headers["authorization"]);
+                            onClose && onClose();
                         })
                         .catch(err => {
                             console.log(err);

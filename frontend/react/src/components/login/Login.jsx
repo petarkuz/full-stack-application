@@ -10,11 +10,11 @@ import {
     Heading,
     Input,
     Stack,
-    Image,
+    Image, Link,
 } from '@chakra-ui/react'
 import {Form, Formik} from "formik";
 import * as Yup from 'yup';
-import {MyTextInput} from "../customer/CreateCustomerForm.jsx";
+import {MyTextInput} from "../shared/CreateCustomerForm.jsx";
 import {login} from "../../services/client.js";
 import {errorNotification, successNotification} from "../../services/notification.js";
 import {useAuth} from "../context/AuthContext.jsx";
@@ -99,6 +99,7 @@ const Login = () => {
                     />
                     <Heading fontSize={'2xl'}>Sign in to your account</Heading>
                     <LoginForm/>
+                    <Link href={"/signup"} color={"blue.500"}>Dont have an account? Please, Sign Up now.</Link>
                 </Stack>
             </Flex>
             <Flex flex={1}>

@@ -40,7 +40,7 @@ public class AuthenticationIntegrationTest {
     void canLoginACustomer() {
         String name = this.faker.name().firstName();
         String email = this.faker.internet().emailAddress();
-        int age = this.faker.number().numberBetween(16, 99);
+        Integer age = (Integer) this.faker.number().numberBetween(16, 99) ;
         Gender gender = Math.random() > 0.5 ? Gender.MALE : Gender.FEMALE;
         String password = "password";
 
@@ -84,7 +84,7 @@ public class AuthenticationIntegrationTest {
         AuthenticationResponse responseBody = result.getResponseBody();
         CustomerDTO customerDTO = responseBody.customerDTO();
 
-        assertThat(this.jwtUtil.isValidToken(jwt, customerDTO.username()));
+        assertThat(this.jwtUtil.isValidToken(jwt, customerDTO.username())).isTrue();
 
         assertThat(customerDTO.email()).isEqualTo(email);
         assertThat(customerDTO.age()).isEqualTo(age);
@@ -93,6 +93,4 @@ public class AuthenticationIntegrationTest {
         assertThat(customerDTO.username()).isEqualTo(email);
         assertThat(customerDTO.roles()).isEqualTo(List.of("ROLE_USER"));
     }
-
-
 }
