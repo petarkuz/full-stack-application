@@ -23,7 +23,6 @@ public class Main {
 //                    new Customer("Alex", "alexdumphy@gmail.com", 22),
 //                    new Customer("Haily", "queenh@gmail.com", 25)
 //            );
-
             Faker faker = new Faker();
 
             String firstName = faker.name().firstName();
